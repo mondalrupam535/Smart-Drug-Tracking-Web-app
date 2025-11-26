@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Smart Drug Tracker — Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="departments.js"></script>
+</head>
+<body class="app-bg">
+
+  <aside class="sidebar glass">
+    <div class="logo">Smart Drug Tracker</div>
+    <div class="nav">
+      <button class="nav-btn active" data-view="inventory">Inventory</button>
+      <button class="nav-btn" data-view="alerts">Alerts</button>
+      <button class="nav-btn" data-view="forecast">Forecast</button>
+    </div>
+
+    <hr>
+    <div class="side-section">
+      <label>Department filter
+        <select id="deptFilter"></select>
+      </label>
+      <div style="margin-top:10px;display:flex;gap:8px;">
+        <button id="addBtn" class="btn primary">+ Add Drug</button>
+        <button id="exportBtn" class="btn ghost">Export</button>
+      </div>
+    </div>
+
+    <div style="margin-top:auto">
+      <div id="sessionInfo" class="muted small"></div>
+      <button id="logoutBtn" class="btn ghost">Logout</button>
+    </div>
+  </aside>
+
+  <main class="main glass">
+    <header class="topbar">
+      <div id="welcome" class="welcome muted"></div>
+      <div class="top-actions">
+        <input id="searchInput" placeholder="Search drugs, barcode or id...">
+        <input id="scanInput" placeholder="Scan / quick add..." />
+        <button id="scanBtn" class="btn">Scan</button>
+        <button id="toggleSim" class="btn ghost">Stop IoT</button>
+      </div>
+    </header>
+
+    <section class="stats-grid" id="statsGrid">
+      <div class="stat-card">
+        <div class="stat-title">Total Drugs</div>
+        <div id="totalDrugs" class="stat-value">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Low Stock</div>
+        <div id="lowStock" class="stat-value">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Expiring Soon</div>
+        <div id="expiringSoon" class="stat-value">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Temp Risks</div>
+        <div id="tempRisks" class="stat-value">0</div>
+      </div>
+    </section>
+
+    <section id="inventoryView" class="panel">
+      <div class="panel-head">
+        <h3>Inventory (FEFO)</h3>
+        <div class="panel-actions">
+          <select id="sortSelect">
+            <option value="expiry">Sort by expiry (FEFO)</option>
+            <option value="name">Sort by name</option>
+            <option value="stock">Sort by stock</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table id="inventoryTable">
+          <thead>
+            <tr><th>Drug</th><th>Dept</th><th>Stock</th><th>Expiry</th><th>Temp (°C)</th><th>Restock</th><th>Actions</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="alertsView" class="panel" style="display:none">
+      <h3>Automated Alerts</h3>
+      <div id="alertsList" class="alerts-list"></div>
+    </section>
+
+    <section id="forecastView" class="panel" style="display:none">
+      <h3>Demand Forecast</h3>
+      <div class="forecast-controls">
+        <select id="forecastDrug"></select>
+        <input id="forecastMonths" type="number" min="1" max="12" value="6">
+        <button id="generateForecast" class="btn primary">Generate</button>
+      </div>
+      <canvas id="forecastChart" height="120"></canvas>
+    </section>
+  </main>
+
+  <!-- global modal & toast area (injected by script.js) -->
+  <script src="script.js"></script>
+</body>
+</html>

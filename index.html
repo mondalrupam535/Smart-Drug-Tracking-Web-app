@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Smart Drug Tracker — Login</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="departments.js"></script>
+</head>
+<body class="auth-bg">
+
+  <div class="auth-layout">
+    <div class="auth-left glass">
+      <div class="brand">Smart Drug Tracker</div>
+      <p class="lead">Secure hospital drug inventory — role based access (Admin, Pharmacist, Department).</p>
+
+      <div class="demo">
+        <strong>Demo accounts</strong>
+        <ul>
+          <li>admin@hospital.local / <em>admin123</em> — Admin</li>
+          <li>pharma@hospital.local / <em>pharma123</em> — Pharmacist</li>
+          <li>cardio@hospital.local / <em>cardio123</em> — Department User</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="auth-right glass">
+      <div class="tab-row">
+        <button id="loginTab" class="tab active">Sign in</button>
+        <button id="signupTab" class="tab">Sign up</button>
+      </div>
+
+      <!-- LOGIN -->
+      <form id="loginForm" class="form">
+        <label>Email
+          <input id="loginEmail" type="email" placeholder="you@hospital.local" required>
+        </label>
+
+        <label>Password
+          <input id="loginPass" type="password" placeholder="password" required>
+        </label>
+
+        <label>Role
+          <select id="loginRole" required>
+            <option value="Admin">Admin</option>
+            <option value="Pharmacist">Pharmacist</option>
+            <option value="Department">Department User</option>
+          </select>
+        </label>
+
+        <label id="loginDeptLabel" style="display:none">Department
+          <select id="loginDept"></select>
+        </label>
+
+        <div class="form-row">
+          <button type="submit" class="btn primary">Sign in</button>
+          <button type="button" id="demoBtn" class="btn ghost">Auto Demo</button>
+        </div>
+      </form>
+
+      <!-- SIGNUP -->
+      <form id="signupForm" class="form" style="display:none">
+        <label>Full Name
+          <input id="signupName" required>
+        </label>
+        <label>Email
+          <input id="signupEmail" type="email" required>
+        </label>
+        <label>Password
+          <input id="signupPass" type="password" required>
+        </label>
+        <label>Role
+          <select id="signupRole" required>
+            <option value="Pharmacist">Pharmacist</option>
+            <option value="Department">Department User</option>
+          </select>
+        </label>
+        <label>Department
+          <select id="signupDept"></select>
+        </label>
+        <div class="form-row">
+          <button type="submit" class="btn primary">Create account</button>
+          <button type="button" id="backToLogin" class="btn ghost">Back</button>
+        </div>
+      </form>
+
+      <p class="muted small">This is a front-end demo using <strong>localStorage</strong>. No server required.</p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    // Populate department selects
+    const loginDept = document.getElementById('loginDept');
+    const signupDept = document.getElementById('signupDept');
+    DEPARTMENTS.forEach(d => { loginDept.appendChild(new Option(d,d)); signupDept.appendChild(new Option(d,d)); });
+    // Show/hide dept select on role
+    document.getElementById('loginRole').addEventListener('change', e => {
+      document.getElementById('loginDeptLabel').style.display = e.target.value === 'Admin' ? 'none' : 'block';
+    });
+  </script>
+</body>
+</html>
